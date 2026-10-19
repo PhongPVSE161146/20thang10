@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Món Quà Bí Mật Dành Riêng Cho Bạn ✨</title>
+  <meta name="description" content="Chạm vào cảm biến vân tay để mở khóa món quà bất ngờ đặc biệt...">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Alex+Brush&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- Màn hình khóa Samsung 3D Galaxy & Cảm biến vân tay dưới màn hình -->
+  <div class="lockscreen-overlay" id="lockscreenOverlay">
+    <!-- Canvas 3D bầu trời vũ trụ, cực quang & dải ngân hà -->
+    <canvas id="sky3DCanvas" class="sky-3d-canvas"></canvas>
+
+    <!-- Lớp phủ ánh sáng mờ huyền ảo phong cách Samsung One UI -->
+    <div class="samsung-sky-vignette"></div>
+
+    <!-- Thanh trạng thái đỉnh cao kiểu Samsung Galaxy -->
+    <div class="samsung-status-bar">
+      <div class="status-left">
+        <span class="carrier-name">Viettel 5G</span>
+        <span class="signal-bars">
+          <i></i><i></i><i></i><i></i>
+        </span>
+      </div>
+      <div class="status-right">
+        <span class="battery-pct">100%</span>
+        <div class="samsung-battery">
+          <div class="battery-body">
+            <div class="battery-fill"></div>
+          </div>
+          <div class="battery-tip"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Đồng hồ & Ngày tháng phong cách Samsung Galaxy màn hình khóa -->
+    <div class="samsung-header">
+      <div class="samsung-time" id="samsungClock">20:10</div>
+      <div class="samsung-date" id="samsungDate">Thứ Ba, 20 Tháng 10</div>
+      <div class="samsung-weather-badge">
+        <span class="weather-icon">🌙</span>
+        <span>20°C · Đêm Trăng Tuyệt Đẹp</span>
+      </div>
+      <div class="samsung-badge">
+        <span class="samsung-badge-sparkle">🌹</span>
+        <span>Chạm Hoa Hồng Để Khám Phá Bí Mật</span>
+        <span class="samsung-badge-sparkle">✦</span>
+      </div>
+    </div>
+
+    <!-- Khu vực cảm biến chạm dạng hoa hồng phát sáng (Luminous Rose Touch Sensor) -->
+    <div class="samsung-fp-area">
+      <div class="samsung-fp-sensor flower-sensor" id="fingerprintSensor" role="button" tabindex="0"
+        aria-label="Cảm biến hoa hồng phát sáng chạm mở khóa">
+        <!-- Vòng sóng âm siêu âm Ultrasonic Ripple của Samsung khi chạm/quét -->
+        <div class="samsung-ripple s-ripple-1"></div>
+        <div class="samsung-ripple s-ripple-2"></div>
+        <div class="samsung-ripple s-ripple-3"></div>
+        <div class="samsung-ripple s-ripple-4"></div>
+
+        <!-- Vành quang học dẫn hướng ánh sáng thở (Luminous Breathing Guide Ring) -->
+        <div class="s-target-ring"></div>
+        <div class="s-scanner-laser" id="sLaser"></div>
+
+        <!-- Quầng sáng quang học dịu êm -->
+        <div class="samsung-fp-halo"></div>
+
+        <!-- Vòng tiến trình tròn SVG nạp năng lượng -->
+        <svg class="samsung-ring-svg" viewBox="0 0 160 160">
+          <defs>
+            <linearGradient id="samsungRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ffa3c4" />
+              <stop offset="50%" stop-color="#ff4d8d" />
+              <stop offset="100%" stop-color="#ffd166" />
+            </linearGradient>
+          </defs>
+          <circle class="s-ring-bg" cx="80" cy="80" r="70"></circle>
+          <circle class="s-ring-fill" id="ringFill" cx="80" cy="80" r="70"></circle>
+        </svg>
+
+        <!-- Biểu tượng Đóa Hoa Hồng Phát Sáng Kỳ Diệu (Luminous Blooming Rose Touch Sensor) -->
+        <div class="samsung-fp-glyph flower-glyph" id="fingerprintIcon">
+          <svg viewBox="0 0 100 100" fill="none" stroke="currentColor">
+            <defs>
+              <radialGradient id="roseGlowFill" cx="50%" cy="45%" r="48%">
+                <stop offset="0%" stop-color="#ff75a0" stop-opacity="0.45" />
+                <stop offset="65%" stop-color="#ff2a70" stop-opacity="0.18" />
+                <stop offset="100%" stop-color="#ff1a53" stop-opacity="0" />
+              </radialGradient>
+              <linearGradient id="rosePetalStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ffa8c8" />
+                <stop offset="50%" stop-color="#ff4d8d" />
+                <stop offset="100%" stop-color="#ff2a70" />
+              </linearGradient>
+            </defs>
+            <!-- Lớp hào quang dịu nhẹ bên trong cánh hoa -->
+            <circle cx="50" cy="45" r="32" fill="url(#roseGlowFill)" stroke="none" />
+
+            <!-- Nhụy nụ hoa hồng cuộn xoắn ốc tinh xảo (Rose Heart Spiral) -->
+            <path
+              d="M49 34 C53 33 56 36 56 39 C56 43 51 45 47 44 C43 43 42 39 44 36 C46 33 51 32 54 34 C57 36 57 41 55 43 C52 46 47 46 45 44"
+              stroke="url(#rosePetalStroke)" stroke-width="2.2" stroke-linecap="round" />
+
+            <!-- Cánh hoa ôm trung tâm (Inner Heart Petals) -->
+            <path d="M41 38 C39 44 42 50 48 51 C54 52 58 47 57 42 C56 37 51 34 46 34" stroke="url(#rosePetalStroke)"
+              stroke-width="2.2" stroke-linecap="round" />
+            <path d="M54 36 C59 40 60 47 56 52 C52 56 45 56 40 52" stroke="url(#rosePetalStroke)" stroke-width="2.2"
+              stroke-linecap="round" />
+
+            <!-- Cánh hoa tầng 2 mở rộng (Mid Rose Petals with wavy curves) -->
+            <path d="M35 41 C32 49 35 58 43 62 C52 65 61 61 64 54 C66 47 62 40 55 35" stroke="url(#rosePetalStroke)"
+              stroke-width="2.2" stroke-linecap="round" />
+            <path d="M43 32 C50 27 60 29 65 35 C70 42 69 52 63 60" stroke="url(#rosePetalStroke)" stroke-width="2.2"
+              stroke-linecap="round" />
+            <path d="M33 39 C28 47 30 58 38 66 C47 73 58 72 65 65" stroke="url(#rosePetalStroke)" stroke-width="2.4"
+              stroke-linecap="round" />
+
+            <!-- Cánh hoa ngoài cùng bung nở rực rỡ (Outer Blooming Petals) -->
+            <path d="M28 35 C21 45 22 59 32 70 C43 80 59 80 70 69 C78 59 78 46 71 36" stroke="url(#rosePetalStroke)"
+              stroke-width="2.4" stroke-linecap="round" />
+            <path d="M30 30 C41 21 59 21 70 30 C78 38 80 50 77 62" stroke="url(#rosePetalStroke)" stroke-width="2.2"
+              stroke-linecap="round" />
+            <path d="M22 47 C19 61 27 75 40 82 C55 86 71 82 80 70" stroke="url(#rosePetalStroke)" stroke-width="2.2"
+              stroke-linecap="round" />
+
+            <!-- Đài hoa nhọn thanh thoát (Rose Sepals) -->
+            <path d="M36 80 C30 85 22 88 16 89 C23 85 31 82 38 79" stroke="url(#rosePetalStroke)" stroke-width="2.0"
+              stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M64 80 C70 85 78 88 84 89 C77 85 69 82 62 79" stroke="url(#rosePetalStroke)" stroke-width="2.0"
+              stroke-linecap="round" stroke-linejoin="round" />
+
+            <!-- Cuống hoa & 2 lá hoa hồng có gân (Stem & Rose Leaves with Veins) -->
+            <path d="M50 83 L50 96" stroke="url(#rosePetalStroke)" stroke-width="2.6" stroke-linecap="round" />
+            <!-- Lá bên trái -->
+            <path d="M50 88 C41 85 33 88 28 93 C35 95 44 93 50 88 Z" stroke="url(#rosePetalStroke)" stroke-width="1.8"
+              fill="rgba(255, 77, 141, 0.18)" stroke-linejoin="round" />
+            <path d="M38 90 L45 90" stroke="url(#rosePetalStroke)" stroke-width="1.2" stroke-linecap="round" />
+            <!-- Lá bên phải -->
+            <path d="M50 90 C59 87 67 90 72 95 C65 97 56 95 50 90 Z" stroke="url(#rosePetalStroke)" stroke-width="1.8"
+              fill="rgba(255, 77, 141, 0.18)" stroke-linejoin="round" />
+            <path d="M62 92 L55 92" stroke="url(#rosePetalStroke)" stroke-width="1.2" stroke-linecap="round" />
+          </svg>
+        </div>
+
+        <!-- Hoa hồng bung nở chúc mừng khi mở khóa thành công -->
+        <div class="samsung-fp-success" id="successIcon">
+          <span class="success-tulip">🌹</span>
+        </div>
+      </div>
+
+      <!-- Dòng trạng thái thanh lịch dưới đóa hoa cảm biến -->
+      <p class="samsung-fp-hint" id="statusText">Chạm vào hoa hồng để mở khóa</p>
+    </div>
+  </div>
+
+  <!-- Ambient background glow layers -->
+  <div class="ambient-nebula" id="ambientNebula"></div>
+  <div class="starfield" id="starfield"></div>
+
+  <!-- Main Canvas for dynamic 3D-like glowing Tulips and Particles -->
+  <canvas id="tulipCanvas"></canvas>
+
+  <!-- Cursor sparkles canvas -->
+  <canvas id="cursorCanvas"></canvas>
+
+  <!-- Falling Petals Container -->
+  <div id="petalsContainer"></div>
+
+  <!-- Nút điều khiển âm nhạc góc trên bên phải (Tối giản & Sang trọng) -->
+  <div class="music-floating-container">
+    <button class="glass-circle-btn playing" id="btnMusic" title="Bật/Tắt âm nhạc">
+      <span class="music-icon" id="musicIcon">🎵</span>
+      <span class="sound-wave" id="soundWave">
+        <i></i><i></i><i></i><i></i>
+      </span>
+    </button>
+  </div>
+
+  <!-- Hero Greeting Overlay & Letter Trigger -->
+  <main class="content-container">
+    <div class="hero-center">
+      <div class="badge-2010">
+        <span class="badge-sparkle">✦</span>
+        <span>CHÚC MỪNG NGÀY PHỤ NỮ VIỆT NAM 20/10</span>
+        <span class="badge-sparkle">✦</span>
+      </div>
+
+      <h1 class="hero-title">
+        Gửi Tới <span class="recipient-name-display" id="recipientNameDisplay">Cô gái tuyệt vời</span>
+      </h1>
+
+      <p class="hero-subtitle" id="heroSubtitle">
+        "Tươi thắm tựa tulip ban mai, rạng ngời tựa muôn vì sao sáng."
+      </p>
+
+      <div class="action-buttons">
+        <button class="btn-primary-glow" id="btnOpenLetter">
+          <span class="btn-emoji">💌</span>
+          <span>Mở Thư Chúc Mừng 20/10</span>
+          <span class="btn-shine"></span>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- 3D Interactive Envelope & Love Letter Modal -->
+  <div class="modal-backdrop" id="letterModal">
+    <div class="letter-modal-box">
+      <!-- Lớp hiệu ứng hạt bụi sao & pháo hoa bùng nổ khi mở phong bì -->
+      <div class="letter-particles-layer" id="letterParticles"></div>
+
+      <button class="btn-close-modal" id="btnCloseLetter" title="Đóng thư">✕</button>
+
+      <div class="envelope-wrapper" id="envelopeWrapper">
+        <div class="envelope">
+          <div class="envelope-back"></div>
+          <div class="envelope-paper" id="envelopePaper">
+            <div class="letter-header">
+              <span class="letter-stamp">🌷 20 · 10</span>
+              <span class="letter-date">20 Tháng 10, Ngày Phụ Nữ Việt Nam</span>
+            </div>
+
+            <h2 class="letter-salutation">
+              Thương gửi <span class="letter-recipient" id="letterRecipient">Người Phụ Nữ Tuyệt Vời</span>,
+            </h2>
+
+            <div class="letter-body" id="letterBodyText">
+              <!-- Nội dung sẽ tự động nạp từ CONFIG trong file script.js -->
+            </div>
+
+            <div class="letter-signature">
+              <div class="sig-title">Gửi gắm ngàn yêu thương,</div>
+              <div class="sig-name" id="letterSender">Người luôn bên em 🌹</div>
+            </div>
+
+            <div class="letter-footer-btns">
+              <button class="letter-action-btn" id="btnCloseLetterBottom">
+                <span>🌷 Đóng thư & Thưởng thức vườn hoa</span>
+              </button>
+            </div>
+          </div>
+          <div class="envelope-flap" id="envelopeFlap"></div>
+          <div class="envelope-seal" id="envelopeSeal">
+            <div class="seal-inner">20/10</div>
+          </div>
+          <div class="envelope-front"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-notification" id="toastNotification">
+    <span class="toast-icon">✨</span>
+    <span class="toast-message" id="toastMessage">Thông báo</span>
+  </div>
+
+
+  <!-- Background Audio Player cho bài hát Chờ Chút... -->
+  <audio id="bgAudio" loop preload="auto" src="chờ chút....mp3">
+    <source src="chờ chút....mp3" type="audio/mpeg">
+    <source src="cho%CC%9B%CC%80%20chu%CC%81t....mp3" type="audio/mpeg">
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

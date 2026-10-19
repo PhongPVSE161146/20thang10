@@ -1,0 +1,1771 @@
+/* ====================================================================
+   VƯỜN TULIP KỲ DIỆU 20/10 - STYLESHEET CHẤT LƯỢNG CAO
+   ==================================================================== */
+
+:root {
+  --bg-dark: #0a0614;
+  --bg-gradient: radial-gradient(circle at 50% 20%, #200f33 0%, #0d0617 50%, #05020a 100%);
+  --tulip-pink-core: #ff4d8d;
+  --tulip-gold: #ffbe53;
+  --accent-glow: rgba(255, 105, 180, 0.45);
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+  --text-main: #ffffff;
+  --text-sub: #f3d9e8;
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-script: 'Dancing Script', cursive;
+  --font-ui: 'Outfit', sans-serif;
+  --font-hand: 'Alex Brush', cursive;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  user-select: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-dark);
+  font-family: var(--font-ui);
+  color: var(--text-main);
+  position: relative;
+}
+
+/* ====================================================================
+   AMBIENT BACKGROUND & ATMOSPHERE
+   ==================================================================== */
+.ambient-nebula {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-gradient);
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ambient-nebula::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: 20%;
+  width: 60vw;
+  height: 60vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(230, 57, 120, 0.22) 0%, rgba(142, 68, 173, 0.08) 60%, transparent 80%);
+  filter: blur(80px);
+  animation: floatNebula 18s ease-in-out infinite alternate;
+}
+
+.ambient-nebula::after {
+  content: '';
+  position: absolute;
+  bottom: -10%;
+  right: 10%;
+  width: 50vw;
+  height: 50vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 154, 162, 0.18) 0%, rgba(254, 214, 227, 0.05) 50%, transparent 70%);
+  filter: blur(90px);
+  animation: floatNebula2 22s ease-in-out infinite alternate;
+}
+
+@keyframes floatNebula {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(60px, 40px) scale(1.1); }
+  100% { transform: translate(-40px, 80px) scale(0.95); }
+}
+
+@keyframes floatNebula2 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-70px, -50px) scale(1.15); }
+  100% { transform: translate(30px, -70px) scale(1); }
+}
+
+.starfield {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: 
+    radial-gradient(1.5px 1.5px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 40px 70px, #ffb3d9, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 90px 40px, #ffecb3, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 230px 210px, #d1c4e9, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 320px 320px;
+  opacity: 0.55;
+  animation: twinkle 5s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.35; }
+  100% { opacity: 0.7; }
+}
+
+/* ====================================================================
+   CANVAS LAYERS
+   ==================================================================== */
+#tulipCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  cursor: crosshair;
+}
+
+#cursorCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+}
+
+#petalsContainer {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.falling-petal {
+  position: absolute;
+  top: -40px;
+  border-radius: 50% 10% 50% 50%;
+  background: linear-gradient(135deg, #ff75a0, #ff4071);
+  box-shadow: 0 4px 12px rgba(255, 64, 113, 0.4);
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+/* ====================================================================
+   FLOATING MUSIC BUTTON
+   ==================================================================== */
+.music-floating-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  pointer-events: auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(20, 10, 35, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  padding: 8px 18px;
+  border-radius: 40px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.brand:hover {
+  transform: translateY(-2px) scale(1.02);
+  border-color: rgba(255, 150, 200, 0.4);
+}
+
+.brand-icon {
+  font-size: 24px;
+  filter: drop-shadow(0 0 8px #ff69b4);
+  animation: pulseIcon 2.5s ease-in-out infinite;
+}
+
+@keyframes pulseIcon {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.15) rotate(5deg); }
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  background: linear-gradient(90deg, #fff, #ffb3d9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-sub {
+  font-size: 11px;
+  color: #ff9ec6;
+  font-weight: 500;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.glass-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(25, 12, 42, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  padding: 8px 16px;
+  border-radius: 30px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.glass-pill-btn:hover {
+  background: rgba(255, 105, 180, 0.25);
+  border-color: rgba(255, 150, 200, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 77, 141, 0.35);
+}
+
+.glass-pill-btn.active {
+  background: linear-gradient(135deg, rgba(255, 77, 141, 0.6), rgba(155, 89, 182, 0.6));
+  border-color: #ff85b3;
+  box-shadow: 0 0 16px rgba(255, 105, 180, 0.4);
+}
+
+.palette-dropdown-wrapper {
+  position: relative;
+}
+
+.palette-preview-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff4d8d, #ff9ecd);
+  box-shadow: 0 0 8px #ff4d8d;
+  display: inline-block;
+}
+
+.palette-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: rgba(18, 9, 32, 0.95);
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 8px;
+  min-width: 190px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 50;
+}
+
+.palette-dropdown.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.palette-opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: none;
+  color: #f1e4f4;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-family: inherit;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s;
+}
+
+.palette-opt:hover {
+  background: rgba(255, 105, 180, 0.2);
+  color: #fff;
+}
+
+.palette-opt .dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.dot.pink { background: linear-gradient(135deg, #ff4d8d, #ffb3d9); }
+.dot.sunset { background: linear-gradient(135deg, #ff7e40, #ffd166); }
+.dot.velvet { background: linear-gradient(135deg, #c9184a, #ff4d6d); }
+.dot.purple { background: linear-gradient(135deg, #9d4edd, #e0aaff); }
+.dot.aurora { background: linear-gradient(135deg, #00f5d4, #7b2cbf); }
+.dot.rainbow { background: linear-gradient(135deg, #ff4d6d, #ffd166, #06d6a0, #118ab2); }
+
+/* Glass Circle Buttons */
+.glass-circle-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(25, 12, 42, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.25s ease;
+  color: #fff;
+}
+
+.glass-circle-btn:hover {
+  background: rgba(255, 105, 180, 0.3);
+  border-color: #ff85b3;
+  transform: scale(1.08);
+}
+
+.sound-wave {
+  position: absolute;
+  bottom: 6px;
+  display: flex;
+  gap: 2px;
+  align-items: flex-end;
+  height: 10px;
+}
+
+.sound-wave i {
+  width: 2px;
+  height: 3px;
+  background: #ff85b3;
+  border-radius: 2px;
+  transition: height 0.2s;
+}
+
+.glass-circle-btn.playing .sound-wave i:nth-child(1) { animation: wave 0.8s ease-in-out infinite 0.1s; }
+.glass-circle-btn.playing .sound-wave i:nth-child(2) { animation: wave 0.8s ease-in-out infinite 0.3s; }
+.glass-circle-btn.playing .sound-wave i:nth-child(3) { animation: wave 0.8s ease-in-out infinite 0.2s; }
+.glass-circle-btn.playing .sound-wave i:nth-child(4) { animation: wave 0.8s ease-in-out infinite 0.4s; }
+
+@keyframes wave {
+  0%, 100% { height: 3px; }
+  50% { height: 10px; }
+}
+
+/* ====================================================================
+   HERO / MAIN CONTENT OVERLAY
+   ==================================================================== */
+.content-container {
+  position: fixed;
+  top: 20%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+  pointer-events: none;
+}
+
+.hero-center {
+  pointer-events: auto;
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.badge-2010 {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 77, 141, 0.16);
+  border: 1px solid rgba(255, 115, 160, 0.4);
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #ffb3d9;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  box-shadow: 0 0 20px rgba(255, 77, 141, 0.25);
+  animation: glowBadge 3s ease-in-out infinite alternate;
+}
+
+@keyframes glowBadge {
+  0% { box-shadow: 0 0 15px rgba(255, 77, 141, 0.2); }
+  100% { box-shadow: 0 0 28px rgba(255, 105, 180, 0.5); }
+}
+
+.badge-sparkle {
+  color: #ffd166;
+  font-size: 14px;
+}
+
+.hero-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.9rem, 4.8vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 12px;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+}
+
+.recipient-name-display {
+  background: linear-gradient(120deg, #ff9ecd 0%, #ff4d8d 50%, #ffd166 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #ff4d8d; /* Fallback nếu trình duyệt không hỗ trợ clip text */
+  display: inline-block;
+  font-family: var(--font-script);
+  font-size: 1.22em;
+  padding: 2px 8px 6px 8px;
+  text-shadow: none; /* Khắc phục triệt để lỗi bóng đen thẻ cha đè xuyên qua chữ gradient trong suốt */
+  filter: drop-shadow(0 2px 14px rgba(255, 77, 141, 0.45));
+  vertical-align: baseline;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.hero-subtitle {
+  font-size: clamp(0.95rem, 2vw, 1.2rem);
+  font-style: italic;
+  color: var(--text-sub);
+  margin-bottom: 24px;
+  font-weight: 300;
+  max-width: 600px;
+  line-height: 1.6;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn-primary-glow {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #ff4071, #d62262);
+  color: #fff;
+  border: none;
+  padding: 13px 28px;
+  border-radius: 40px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  box-shadow: 0 8px 30px rgba(255, 64, 113, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+
+.btn-primary-glow:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 36px rgba(255, 64, 113, 0.75), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+
+.btn-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: skewX(-20deg);
+  animation: shineLoop 4s infinite;
+}
+
+@keyframes shineLoop {
+  0%, 70% { left: -100%; }
+  100% { left: 200%; }
+}
+
+.btn-secondary-glass {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(30, 15, 50, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  color: #fff;
+  padding: 12px 22px;
+  border-radius: 40px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-secondary-glass:hover {
+  background: rgba(255, 105, 180, 0.25);
+  border-color: #ff85b3;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 77, 141, 0.3);
+}
+
+/* Click hint */
+.click-hint {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 6, 28, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-size: 13px;
+  color: #ffc2df;
+  z-index: 15;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: floatBounce 2.5s ease-in-out infinite;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes floatBounce {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, -8px); }
+}
+
+/* ====================================================================
+   MODAL BACKDROP & ENVELOPE (3D EFFECT)
+   ==================================================================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 50% 45%, rgba(68, 14, 42, 0.75) 0%, rgba(18, 4, 14, 0.94) 80%, rgba(6, 1, 6, 0.98) 100%);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+.modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.letter-modal-box {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  max-height: 90vh;
+  display: flex;
+  justify-content: center;
+  transform: scale(0.85) translateY(40px);
+  opacity: 0;
+  transition: transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease;
+}
+
+.modal-backdrop.active .letter-modal-box {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* Lớp hiệu ứng hạt bụi sao & pháo hoa bùng nổ khi mở phong bì */
+.letter-particles-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 60;
+}
+
+.letter-fx-particle {
+  position: absolute;
+  font-size: 20px;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.9));
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+@keyframes letterParticleFly {
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0) scale(0.2) rotate(0deg);
+    opacity: 1;
+  }
+  65% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(var(--tx), var(--ty)) scale(var(--scale)) rotate(var(--rot));
+    opacity: 0;
+  }
+}
+
+.letter-ambient-petal {
+  position: absolute;
+  font-size: 22px;
+  opacity: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 10px rgba(255, 77, 141, 0.5));
+  animation: letterAmbientFall linear forwards;
+}
+
+@keyframes letterAmbientFall {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(0.7);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.9;
+  }
+  85% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(85vh) rotate(360deg) scale(1.1);
+    opacity: 0;
+  }
+}
+
+.btn-close-modal {
+  position: absolute;
+  top: -46px;
+  right: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  z-index: 110;
+}
+
+.btn-close-modal:hover {
+  background: #ff4071;
+  transform: rotate(90deg);
+}
+
+/* 3D Envelope Container */
+.envelope-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 540px;
+  perspective: 1400px;
+}
+
+.envelope {
+  position: relative;
+  width: 100%;
+  min-height: 320px;
+  background: linear-gradient(135deg, #f29bb2 0%, #e07a97 50%, #c95779 100%);
+  border-radius: 16px;
+  box-shadow: 0 25px 75px rgba(0, 0, 0, 0.7),
+              0 0 50px rgba(255, 77, 141, 0.35),
+              inset 0 0 0 1.5px rgba(255, 215, 0, 0.35);
+  display: flex;
+  justify-content: center;
+  transition: all 0.6s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+/* When envelope opened, paper rises up with smooth 3D luxury physics */
+.envelope-wrapper.open .envelope-paper {
+  transform: translateY(-90px) scale(1.03);
+  z-index: 20;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.7), 0 0 45px rgba(255, 77, 141, 0.25), inset 0 0 0 1.5px rgba(255, 215, 0, 0.5);
+}
+
+.envelope-wrapper.open .envelope-flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+  filter: drop-shadow(0 -4px 12px rgba(0, 0, 0, 0.15));
+}
+
+.envelope-wrapper.open .envelope-seal {
+  opacity: 0;
+  transform: scale(0.3) translateY(-40px);
+  pointer-events: none;
+}
+
+/* Envelope Flap */
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 270px solid transparent;
+  border-right: 270px solid transparent;
+  border-top: 170px solid #d46b88;
+  transform-origin: top center;
+  transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 5;
+  border-radius: 12px 12px 0 0;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.25));
+}
+
+@media (max-width: 600px) {
+  .envelope-flap {
+    border-left-width: 45vw;
+    border-right-width: 45vw;
+    border-top-width: 130px;
+  }
+}
+
+/* Envelope Wax Seal */
+.envelope-seal {
+  position: absolute;
+  top: 130px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 62px;
+  height: 62px;
+  background: radial-gradient(circle at 35% 35%, #e63946 0%, #b5179e 60%, #5a092b 100%);
+  border-radius: 50%;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), 
+              0 0 20px rgba(230, 57, 70, 0.5), 
+              inset 0 2px 6px rgba(255, 255, 255, 0.4),
+              inset 0 -2px 6px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  border: 2px dashed rgba(255, 215, 0, 0.65);
+  animation: sealPulseGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes sealPulseGlow {
+  0%, 100% {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 77, 141, 0.4);
+  }
+  50% {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), 0 0 35px rgba(255, 215, 0, 0.7), 0 0 20px rgba(255, 77, 141, 0.6);
+  }
+}
+
+.envelope-seal:hover {
+  transform: translateX(-50%) scale(1.1);
+  box-shadow: 0 8px 30px rgba(201, 24, 74, 0.9), 0 0 25px rgba(255, 215, 0, 0.6);
+}
+
+.envelope-seal.breaking {
+  animation: sealBreakBurst 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes sealBreakBurst {
+  0% {
+    transform: translateX(-50%) scale(1);
+    filter: brightness(1);
+  }
+  45% {
+    transform: translateX(-50%) scale(1.35) rotate(15deg);
+    filter: brightness(2.2) drop-shadow(0 0 25px #ffd166);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) scale(0.1) translateY(-30px);
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.seal-inner {
+  font-size: 13px;
+  font-weight: 800;
+  color: #ffd166;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.5px;
+}
+
+/* Letter Paper with luxury golden foil & sweep */
+.envelope-paper {
+  position: relative;
+  width: 95%;
+  background: #fffefb;
+  border-radius: 14px;
+  padding: 38px 34px;
+  color: #2c1825;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(212, 175, 55, 0.35);
+  transition: transform 0.85s cubic-bezier(0.34, 1.35, 0.64, 1), box-shadow 0.85s ease;
+  z-index: 3;
+  margin: 16px auto;
+  background-image: 
+    radial-gradient(circle at 10% 8%, rgba(255, 182, 193, 0.25) 0%, transparent 55%),
+    radial-gradient(circle at 92% 92%, rgba(255, 215, 0, 0.15) 0%, transparent 50%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 250, 245, 0.95) 100%);
+  max-height: 75vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Paper golden shimmer wave */
+.envelope-paper::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -80%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), rgba(255, 215, 0, 0.3), transparent);
+  transform: rotate(25deg);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.envelope-wrapper.open .envelope-paper::after {
+  animation: paperShimmerSweep 1.6s ease 0.4s forwards;
+}
+
+@keyframes paperShimmerSweep {
+  0% { left: -80%; opacity: 0; }
+  25% { opacity: 0.9; }
+  100% { left: 160%; opacity: 0; }
+}
+
+/* Staggered Fade-in for letter paragraphs */
+.letter-para-fade {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.envelope-wrapper.open .letter-para-fade {
+  animation: letterTextFadeIn 0.75s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes letterTextFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.letter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed rgba(200, 100, 140, 0.3);
+  padding-bottom: 12px;
+  margin-bottom: 18px;
+}
+
+.letter-stamp {
+  font-size: 13px;
+  font-weight: 700;
+  color: #c9184a;
+  background: #ffe3ec;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid #ffb3c6;
+}
+
+.letter-date {
+  font-size: 12px;
+  color: #8c7380;
+  font-style: italic;
+}
+
+.letter-salutation {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  color: #800f2f;
+  margin-bottom: 14px;
+}
+
+.letter-recipient {
+  font-family: var(--font-script);
+  font-size: 28px;
+  color: #ff4071;
+  font-weight: 700;
+}
+
+.letter-body {
+  font-size: 15px;
+  line-height: 1.75;
+  color: #4a283e;
+  margin-bottom: 20px;
+}
+
+.letter-body p {
+  margin-bottom: 12px;
+}
+
+.letter-quote {
+  font-style: italic;
+  font-weight: 600;
+  color: #c9184a;
+  border-left: 3px solid #ff75a0;
+  padding-left: 12px;
+  margin: 16px 0 !important;
+}
+
+.letter-signature {
+  text-align: right;
+  margin-top: 20px;
+  border-top: 1px dashed rgba(200, 100, 140, 0.25);
+  padding-top: 12px;
+}
+
+.sig-title {
+  font-size: 13px;
+  color: #8c7380;
+  font-style: italic;
+}
+
+.sig-name {
+  font-family: var(--font-hand);
+  font-size: 26px;
+  color: #800f2f;
+  font-weight: bold;
+}
+
+.letter-footer-btns {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.letter-action-btn {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid #ffb3c6;
+  background: #fff0f5;
+  color: #c9184a;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+}
+
+.letter-action-btn:hover {
+  background: #ff4071;
+  color: #fff;
+  border-color: #ff4071;
+}
+
+.letter-action-btn.share-btn {
+  background: #ffe5ec;
+}
+
+/* ====================================================================
+   CUSTOMIZATION MODAL
+   ==================================================================== */
+.custom-card {
+  width: 100%;
+  max-width: 520px;
+  background: rgba(22, 10, 36, 0.95);
+  border: 1px solid rgba(255, 150, 200, 0.25);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 77, 141, 0.2);
+}
+
+.custom-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.custom-header h3 {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  color: #ffb3d9;
+}
+
+.custom-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.custom-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: #f0cfe1;
+  font-weight: 500;
+}
+
+.custom-form input,
+.custom-form textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: #fff;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.custom-form input:focus,
+.custom-form textarea:focus {
+  border-color: #ff75a0;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.preset-wishes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 6px 0;
+}
+
+.preset-wishes span {
+  font-size: 12px;
+  color: #ff9ec6;
+}
+
+.preset-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.preset-tag {
+  background: rgba(255, 77, 141, 0.15);
+  border: 1px solid rgba(255, 115, 160, 0.3);
+  padding: 5px 10px;
+  border-radius: 14px;
+  color: #ffc2df;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.preset-tag:hover {
+  background: #ff4071;
+  color: #fff;
+}
+
+.custom-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* ====================================================================
+   FLOATING CORNER CONTROLS
+   ==================================================================== */
+.floating-controls {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 25;
+}
+
+.control-bubble {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(22, 10, 36, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.control-bubble:hover {
+  transform: scale(1.15) translateY(-2px);
+  background: rgba(255, 105, 180, 0.3);
+  border-color: #ff85b3;
+  box-shadow: 0 8px 25px rgba(255, 77, 141, 0.4);
+}
+
+/* ====================================================================
+   TOAST NOTIFICATION
+   ==================================================================== */
+.toast-notification {
+  position: fixed;
+  top: 85px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-30px);
+  background: rgba(25, 10, 40, 0.92);
+  backdrop-filter: blur(20px);
+  border: 1px solid #ff85b3;
+  padding: 10px 22px;
+  border-radius: 30px;
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 105, 180, 0.4);
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.toast-notification.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ====================================================================
+   RESPONSIVE DESIGN
+   ==================================================================== */
+@media (max-width: 768px) {
+  .music-floating-container {
+    top: 14px;
+    right: 14px;
+  }
+
+  .content-container {
+    top: 15%;
+  }
+
+  .hero-title {
+    font-size: clamp(1.65rem, 6.2vw, 2.2rem);
+    line-height: 1.35;
+    padding: 0 4px;
+  }
+
+  .recipient-name-display {
+    font-size: 1.15em;
+    padding: 2px 4px 4px 4px;
+    display: inline;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .btn-primary-glow {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .click-hint {
+    font-size: 11.5px;
+    padding: 6px 14px;
+    width: 90%;
+    justify-content: center;
+  }
+}
+
+/* ====================================================================
+   SAMSUNG GALAXY 3D LOCKSCREEN & UNDER-DISPLAY FINGERPRINT
+   ==================================================================== */
+.lockscreen-overlay {
+  position: fixed;
+  inset: 0;
+  box-sizing: border-box;
+  z-index: 1000;
+  overflow: hidden;
+  background: #03010a;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: clamp(24px, 5vh, 48px) 24px clamp(28px, 6vh, 52px);
+  user-select: none;
+  -webkit-user-select: none;
+  transition: opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1), transform 0.85s cubic-bezier(0.4, 0, 0.2, 1), filter 0.85s;
+}
+
+.lockscreen-overlay.unlocked {
+  opacity: 0;
+  transform: scale(1.15);
+  filter: blur(14px);
+  pointer-events: none;
+}
+
+/* 3D Celestial Sky Canvas */
+.sky-3d-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Samsung One UI Ambient Sky Vignette */
+.samsung-sky-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, transparent 35%, rgba(3, 1, 10, 0.45) 70%, rgba(3, 1, 10, 0.95) 100%);
+}
+
+/* Samsung Status Bar (Góc trên thanh mảnh, chuẩn tỷ lệ Flagship) */
+.samsung-status-bar {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+  letter-spacing: 0.5px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.status-left, .status-right {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.carrier-name {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.signal-bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2.2px;
+  height: 10px;
+}
+
+.signal-bars i {
+  width: 2.5px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 1px;
+}
+
+.signal-bars i:nth-child(1) { height: 3px; }
+.signal-bars i:nth-child(2) { height: 5px; }
+.signal-bars i:nth-child(3) { height: 7.5px; }
+.signal-bars i:nth-child(4) { height: 10px; }
+
+.battery-pct {
+  font-weight: 500;
+}
+
+.samsung-battery {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5px;
+}
+
+.battery-body {
+  width: 18px;
+  height: 9.5px;
+  border: 1.2px solid rgba(255, 255, 255, 0.85);
+  border-radius: 2.5px;
+  padding: 1px;
+  display: flex;
+}
+
+.battery-fill {
+  width: 100%;
+  height: 100%;
+  background: #22c55e;
+  border-radius: 1px;
+  box-shadow: 0 0 4px rgba(34, 197, 94, 0.6);
+}
+
+.battery-tip {
+  width: 1.5px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 0 1px 1px 0;
+}
+
+/* Samsung Lockscreen Header (Clock & Date) */
+.samsung-header {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  pointer-events: none;
+  margin-top: 6px;
+}
+
+.samsung-time {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(4.8rem, 16vw, 7.2rem);
+  font-weight: 200;
+  letter-spacing: -2px;
+  line-height: 1;
+  background: linear-gradient(180deg, #ffffff 0%, #e0f2fe 65%, #ffd6e7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 28px rgba(0, 242, 254, 0.35));
+}
+
+.samsung-date {
+  font-size: clamp(14.5px, 3.8vw, 17px);
+  font-weight: 400;
+  color: rgba(240, 245, 255, 0.95);
+  margin-top: 8px;
+  letter-spacing: 0.6px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+.samsung-weather-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: #ffecd2;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 209, 102, 0.28);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 5px 16px;
+  border-radius: 20px;
+  margin-top: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+}
+
+.weather-icon {
+  font-size: 13px;
+  filter: drop-shadow(0 0 6px #ffd166);
+}
+
+.samsung-badge {
+  margin-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 6px 20px;
+  border-radius: 24px;
+  font-size: 12.5px;
+  color: #f1f5f9;
+  font-weight: 500;
+  letter-spacing: 0.6px;
+  box-shadow: 0 4px 20px rgba(0, 242, 254, 0.15);
+  animation: sBadgeGlow 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes sBadgeGlow {
+  0% { box-shadow: 0 4px 15px rgba(0, 242, 254, 0.15); border-color: rgba(255, 255, 255, 0.2); }
+  100% { box-shadow: 0 4px 25px rgba(255, 209, 102, 0.35); border-color: rgba(255, 209, 102, 0.45); }
+}
+
+.samsung-badge-sparkle {
+  color: #ffd166;
+  font-size: 11px;
+}
+
+/* Samsung Under-Display Fingerprint Area */
+.samsung-fp-area {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: clamp(18px, 3.5vh, 40px);
+}
+
+.samsung-fp-sensor {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, rgba(55, 16, 36, 0.75) 0%, rgba(28, 8, 20, 0.92) 70%, rgba(12, 3, 9, 0.98) 100%);
+  border: 1.5px solid rgba(255, 77, 141, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.75),
+              0 0 32px rgba(255, 77, 141, 0.35),
+              inset 0 0 25px rgba(255, 117, 160, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.25s, box-shadow 0.25s;
+  animation: samsungFpIdle 3.2s ease-in-out infinite;
+}
+
+@keyframes samsungFpIdle {
+  0%, 100% {
+    transform: scale(1);
+    border-color: rgba(255, 77, 141, 0.45);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.75), 0 0 25px rgba(255, 77, 141, 0.28), inset 0 0 20px rgba(255, 117, 160, 0.18);
+  }
+  50% {
+    transform: scale(1.04);
+    border-color: rgba(255, 117, 160, 0.88);
+    box-shadow: 0 12px 45px rgba(0, 0, 0, 0.8), 0 0 45px rgba(255, 77, 141, 0.55), inset 0 0 30px rgba(255, 117, 160, 0.35);
+  }
+}
+
+.samsung-fp-sensor:hover {
+  transform: scale(1.07);
+  border-color: #ff4d8d;
+  box-shadow: 0 14px 45px rgba(0, 0, 0, 0.85), 0 0 50px rgba(255, 77, 141, 0.75), inset 0 0 30px rgba(255, 117, 160, 0.4);
+}
+
+.samsung-fp-sensor.scanning {
+  transform: scale(0.97);
+  border-color: #ff2a70;
+  box-shadow: 0 0 65px rgba(255, 42, 112, 0.85), inset 0 0 35px rgba(255, 117, 160, 0.6);
+  animation: none;
+}
+
+.samsung-fp-sensor.success {
+  transform: scale(1.15);
+  border-color: #ffd166;
+  box-shadow: 0 0 80px rgba(255, 77, 141, 0.95), 0 0 40px rgba(255, 209, 102, 0.75), inset 0 0 40px rgba(255, 117, 160, 0.65);
+  animation: none;
+}
+
+/* Luminous Ultrasonic Guide Ring (Vòng hào quang hồng thở dẫn hướng) */
+.s-target-ring {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 77, 141, 0.28);
+  box-shadow: 0 0 20px rgba(255, 77, 141, 0.18), inset 0 0 15px rgba(255, 117, 160, 0.1);
+  pointer-events: none;
+  animation: sTargetPulse 3.2s ease-in-out infinite;
+}
+
+@keyframes sTargetPulse {
+  0%, 100% {
+    transform: scale(1);
+    border-color: rgba(255, 77, 141, 0.22);
+    box-shadow: 0 0 16px rgba(255, 77, 141, 0.16);
+  }
+  50% {
+    transform: scale(1.06);
+    border-color: rgba(255, 117, 160, 0.6);
+    box-shadow: 0 0 32px rgba(255, 77, 141, 0.4), inset 0 0 20px rgba(255, 117, 160, 0.18);
+  }
+}
+
+/* Optical Scanner Laser Sweep (Tia laser quét hồng sắc nét) */
+.s-scanner-laser {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 117, 160, 0.45) 25%, #ffffff 50%, rgba(255, 77, 141, 0.45) 75%, transparent);
+  box-shadow: 0 0 12px #ff4d8d, 0 0 24px rgba(255, 77, 141, 0.5);
+  border-radius: 2px;
+  pointer-events: none;
+  opacity: 0.68;
+  animation: sLaserSweep 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes sLaserSweep {
+  0% { top: 20px; opacity: 0.2; transform: scaleX(0.75); }
+  50% { opacity: 0.85; transform: scaleX(1); }
+  100% { top: 74px; opacity: 0.2; transform: scaleX(0.75); }
+}
+
+.samsung-fp-sensor.scanning .s-scanner-laser {
+  animation-duration: 0.7s;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #ff2a70 25%, #ffffff 50%, #ff75a0 75%, transparent);
+  box-shadow: 0 0 20px #ff2a70, 0 0 32px #ff75a0;
+}
+
+.samsung-fp-sensor.success .s-scanner-laser {
+  opacity: 0;
+}
+
+/* Samsung Ultrasonic Ripple Waves (Sóng siêu âm màu hồng khi chạm) */
+.samsung-ripple {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 77, 141, 0.85);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.samsung-fp-sensor.scanning .s-ripple-1 {
+  animation: samsungRipplePulse 1.2s cubic-bezier(0.2, 0.8, 0.3, 1) infinite 0s;
+}
+
+.samsung-fp-sensor.scanning .s-ripple-2 {
+  animation: samsungRipplePulse 1.2s cubic-bezier(0.2, 0.8, 0.3, 1) infinite 0.35s;
+}
+
+.samsung-fp-sensor.scanning .s-ripple-3 {
+  animation: samsungRipplePulse 1.2s cubic-bezier(0.2, 0.8, 0.3, 1) infinite 0.7s;
+}
+
+.samsung-fp-sensor.scanning .s-ripple-4 {
+  animation: samsungRipplePulse 1.2s cubic-bezier(0.2, 0.8, 0.3, 1) infinite 1.05s;
+}
+
+@keyframes samsungRipplePulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.95;
+    border-color: #ff75a0;
+  }
+  50% {
+    border-color: #ff2a70;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+    border-color: #ffa3c4;
+  }
+}
+
+/* Optical Fingerprint Halo Glow (Quầng sáng hồng êm dịu) */
+.samsung-fp-halo {
+  position: absolute;
+  inset: -22px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 77, 141, 0.22) 0%, rgba(255, 117, 160, 0.05) 60%, transparent 75%);
+  pointer-events: none;
+  animation: haloBreathe 3.2s ease-in-out infinite;
+}
+
+@keyframes haloBreathe {
+  0%, 100% { transform: scale(0.92); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 0.95; }
+}
+
+/* Floral Petals Aura around sensor (Hào quang cánh hoa hồng xoay nhẹ) */
+.s-flower-petals-aura {
+  position: absolute;
+  inset: -18px;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: floralAuraRotate 36s linear infinite;
+  z-index: 1;
+}
+
+@keyframes floralAuraRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.flower-aura-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.f-petal {
+  fill: rgba(255, 77, 141, 0.08);
+  stroke: rgba(255, 77, 141, 0.45);
+  stroke-width: 1.2;
+  filter: drop-shadow(0 0 6px rgba(255, 77, 141, 0.4));
+  animation: petalBreathe 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes petalBreathe {
+  0% { opacity: 0.35; transform: scale(0.95); }
+  100% { opacity: 0.85; transform: scale(1.06); stroke: #ff2a70; }
+}
+
+.samsung-fp-sensor.scanning .f-petal {
+  fill: rgba(255, 42, 112, 0.2);
+  stroke: #ff2a70;
+  filter: drop-shadow(0 0 12px rgba(255, 42, 112, 0.9));
+}
+
+/* Luminous Rose Glyph (Biểu tượng hoa hồng phát sáng chạm mở khóa) */
+.flower-glyph {
+  width: 60px;
+  height: 60px;
+  color: #ff4d8d;
+  filter: drop-shadow(0 0 12px rgba(255, 77, 141, 0.95)) drop-shadow(0 0 25px rgba(255, 117, 160, 0.5));
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: flowerGlowPulse 3.2s ease-in-out infinite;
+}
+
+@keyframes flowerGlowPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 10px rgba(255, 77, 141, 0.85)) drop-shadow(0 0 22px rgba(255, 117, 160, 0.4));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 18px rgba(255, 77, 141, 1)) drop-shadow(0 0 35px rgba(255, 42, 112, 0.7));
+    transform: scale(1.05);
+  }
+}
+
+.samsung-fp-glyph svg {
+  width: 100%;
+  height: 100%;
+}
+
+.samsung-fp-sensor.scanning .flower-glyph {
+  color: #ff2a70;
+  filter: drop-shadow(0 0 22px rgba(255, 42, 112, 1)) drop-shadow(0 0 40px rgba(255, 117, 160, 0.9));
+  animation: none;
+  transform: scale(1.08);
+}
+
+.samsung-fp-sensor.success .flower-glyph {
+  opacity: 0;
+  transform: scale(0.3);
+}
+
+/* Samsung Progress Ring SVG */
+.samsung-ring-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+
+.s-ring-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.06);
+  stroke-width: 4;
+}
+
+.s-ring-fill {
+  fill: none;
+  stroke: url(#samsungRingGrad);
+  stroke-width: 4.5;
+  stroke-linecap: round;
+  stroke-dasharray: 440;
+  stroke-dashoffset: 440;
+  transition: stroke-dashoffset 0.04s linear;
+  filter: drop-shadow(0 0 12px #ff4d8d);
+}
+
+/* Samsung Success Icon */
+.samsung-fp-success {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.2);
+  transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: drop-shadow(0 0 25px #ffd166);
+}
+
+.samsung-fp-success .success-tulip {
+  font-size: 50px;
+}
+
+.samsung-fp-sensor.success .samsung-fp-success {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Samsung Hint Text Pill Badge */
+.samsung-fp-hint {
+  font-family: 'Outfit', sans-serif;
+  font-size: 13.5px;
+  color: rgba(255, 235, 245, 0.92);
+  margin-top: 18px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 7px 20px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 77, 141, 0.3);
+  border-radius: 24px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45), 0 0 20px rgba(255, 77, 141, 0.15);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  transition: all 0.3s ease;
+}
+
+.samsung-fp-hint::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff4d8d;
+  box-shadow: 0 0 8px #ff4d8d;
+  animation: hintDotPulse 2s infinite ease-in-out;
+}
+
+@keyframes hintDotPulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.5); opacity: 1; box-shadow: 0 0 12px #00f2fe; }
+}
