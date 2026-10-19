@@ -10,8 +10,8 @@ const CONFIG = {
   lockSuccessMessage: "Xác thực vân tay thành công! ✨",
 
   // 1. THÔNG TIN NGƯỜI NHẬN & NGƯỜI GỬI
-  recipientName: "Ngời xinh không nói",         // Tên người nhận (hiển thị trên tiêu đề & trong thư)
-  senderName: "Người luôn trân trọng bạn 🌹",          // Tên người gửi (ký tên ở cuối bức thư)
+  recipientName: "Vũ Hoàng Oanh",         // Tên người nhận (hiển thị trên tiêu đề & trong thư)
+  senderName: "Người luôn trân trọng cậu 🌹",          // Tên người gửi (ký tên ở cuối bức thư)
 
   // 2. CÂU TỰA DƯỚI TIÊU ĐỀ CHÍNH
   subtitle: '"Tươi thắm tựa đóa tulip ban mai, rạng ngời tựa muôn vì sao sáng."',
